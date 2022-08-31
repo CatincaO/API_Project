@@ -4,7 +4,7 @@ using System;
 
 namespace miniAPI.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     [ApiController]
     public class FormatController : ControllerBase
     {
@@ -37,9 +37,11 @@ namespace miniAPI.Controllers
                 return 11;
             }
         }
-        public static String formatInt(float value, int digits)
+
+        [HttpPost("/FormatInteger")]
+        public String formatInt(float value, int digits)
         {
-            if ( (int) value == 0)
+            if ( (int) value == 0 || digits == 0)
             {
                 return "0";
             }
@@ -55,7 +57,8 @@ namespace miniAPI.Controllers
 
         }
 
-        public static String formatFloat(double value, int desiredDecimals)
+        [HttpPost("/FormatFloat")]
+        public String formatFloat(double value, int desiredDecimals)
         {
             if (desiredDecimals == 0)
             {
@@ -69,11 +72,16 @@ namespace miniAPI.Controllers
                 int p = (int)Math.Pow(10, desiredDecimals);
                 return (Math.Floor(value * p) / p).ToString();  
             }
-            precision++;
-            return value.ToString("F" + precision);
+            return value.ToString("0." + new string('0', desiredDecimals));
+            //precision++;
+            //return value.ToString("F" + precision);
 
+        }
 
-
+        [HttpPost("/GetHello")]
+        public String Get(int x)
+        {
+            return "Hello" + x;
         }
     }
 }
