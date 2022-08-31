@@ -73,15 +73,7 @@ namespace miniAPI.Controllers
                 return (Math.Floor(value * p) / p).ToString();  
             }
             return value.ToString("0." + new string('0', desiredDecimals));
-            //precision++;
-            //return value.ToString("F" + precision);
 
-        }
-
-        [HttpPost("/GetHello")]
-        public String Get(int x)
-        {
-            return "Hello" + x;
         }
     }
 }
