@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\zsolt.tamas.incze\\Desktop\\API_PROJECT\\API_Project\\miniAPI\\miniAPI\\miniAPI.csproj": {}
+    "C:\\Users\\catinca.ioana.ologu\\Documents\\GitHub\\API_Project\\miniAPI\\miniAPI\\miniAPI.csproj": {}
   },
   "projects": {
-    "C:\\Users\\zsolt.tamas.incze\\Desktop\\API_PROJECT\\API_Project\\miniAPI\\miniAPI\\miniAPI.csproj": {
+    "C:\\Users\\catinca.ioana.ologu\\Documents\\GitHub\\API_Project\\miniAPI\\miniAPI\\miniAPI.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\zsolt.tamas.incze\\Desktop\\API_PROJECT\\API_Project\\miniAPI\\miniAPI\\miniAPI.csproj",
+        "projectUniqueName": "C:\\Users\\catinca.ioana.ologu\\Documents\\GitHub\\API_Project\\miniAPI\\miniAPI\\miniAPI.csproj",
         "projectName": "miniAPI",
-        "projectPath": "C:\\Users\\zsolt.tamas.incze\\Desktop\\API_PROJECT\\API_Project\\miniAPI\\miniAPI\\miniAPI.csproj",
-        "packagesPath": "C:\\Users\\zsolt.tamas.incze\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\zsolt.tamas.incze\\Desktop\\API_PROJECT\\API_Project\\miniAPI\\miniAPI\\obj\\",
+        "projectPath": "C:\\Users\\catinca.ioana.ologu\\Documents\\GitHub\\API_Project\\miniAPI\\miniAPI\\miniAPI.csproj",
+        "packagesPath": "C:\\Users\\catinca.ioana.ologu\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\catinca.ioana.ologu\\Documents\\GitHub\\API_Project\\miniAPI\\miniAPI\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\zsolt.tamas.incze\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\catinca.ioana.ologu\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [

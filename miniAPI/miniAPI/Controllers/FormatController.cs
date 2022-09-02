@@ -6,6 +6,21 @@ namespace miniAPI.Controllers
 {
     [Route("[controller]")]
     [ApiController]
+
+    public class ValueParameterInt
+    {
+        public float numberInt { get; set; }
+       
+        public int decimals { get; set; }
+    }
+
+    public class ValueParameterFloat
+    {
+        public double numberInt { get; set; }
+
+        public int desiredDecimals { get; set; }
+    }
+
     public class FormatController : ControllerBase
     {
         public static int countDigits( int n)
@@ -39,41 +54,77 @@ namespace miniAPI.Controllers
         }
 
         [HttpPost("/FormatInteger")]
-        public String formatInt(float value, int digits)
+        //public String formatInt(float value, int digits)
+        //{
+        //    if ( (int) value == 0 || digits == 0)
+        //    {
+        //        return "0";
+        //    }
+
+        //    int numberDigits = countDigits( (int)value);
+
+        //    if (numberDigits <= digits)
+        //    {
+        //        return ((int)value).ToString();
+        //    }
+
+        //    return new String('#', digits);
+
+        //}
+
+        public String formatInt(ValueParameterInt variableInt)
         {
-            if ( (int) value == 0 || digits == 0)
+            if ((int)variableInt.numberInt == 0 || variableInt.decimals == 0)
             {
                 return "0";
             }
 
-            int numberDigits = countDigits( (int)value);
+            int numberDigits = countDigits((int)variableInt.numberInt);
 
-            if (numberDigits <= digits)
+            if (numberDigits <= variableInt.decimals)
             {
-                return ((int)value).ToString();
+                return ((int)variableInt.numberInt).ToString();
             }
 
-            return new String('#', digits);
-
+            return new String('#', variableInt.decimals);
         }
 
         [HttpPost("/FormatFloat")]
-        public String formatFloat(double value, int desiredDecimals)
+        //public String formatFloat(double value, int desiredDecimals)
+        //{
+        //    if (desiredDecimals == 0)
+        //    {
+        //        return ((int)value).ToString();
+        //    }
+
+        //    var precision = 0;
+        //    while (value * (double)Math.Pow(10, precision) != Math.Round(value * (double)Math.Pow(10, precision))) precision++;
+        //    if (desiredDecimals <= precision)
+        //    {
+        //        int p = (int)Math.Pow(10, desiredDecimals);
+        //        return (Math.Floor(value * p) / p).ToString();  
+        //    }
+        //    return value.ToString("0." + new string('0', desiredDecimals));
+
+        //}
+
+        public String formatFloat(ValueParameterFloat variableFloat)
         {
-            if (desiredDecimals == 0)
+            if (variableFloat.desiredDecimals == 0)
             {
-                return ((int)value).ToString();
+                return ((int)variableFloat.numberInt).ToString();
             }
 
             var precision = 0;
-            while (value * (double)Math.Pow(10, precision) != Math.Round(value * (double)Math.Pow(10, precision))) precision++;
-            if (desiredDecimals <= precision)
+            while (variableFloat.numberInt * (double)Math.Pow(10, precision) != Math.Round(variableFloat.numberInt * (double)Math.Pow(10, precision))) precision++;
+            if (variableFloat.desiredDecimals <= precision)
             {
-                int p = (int)Math.Pow(10, desiredDecimals);
-                return (Math.Floor(value * p) / p).ToString();  
+                int pow = (int)Math.Pow(10, variableFloat.desiredDecimals);
+                return (Math.Floor(variableFloat.numberInt * pow) / pow).ToString();
             }
-            return value.ToString("0." + new string('0', desiredDecimals));
+            return variableFloat.numberInt.ToString("0." + new string('0', variableFloat.desiredDecimals));
 
         }
+
     }
 }
