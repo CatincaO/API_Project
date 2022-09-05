@@ -52,3 +52,9 @@ C:\Users\catinca.ioana.ologu\Documents\GitHub\API_Project\miniAPI\miniAPI\obj\De
 C:\Users\catinca.ioana.ologu\Documents\GitHub\API_Project\miniAPI\miniAPI\obj\Debug\net6.0\miniAPI.pdb
 C:\Users\catinca.ioana.ologu\Documents\GitHub\API_Project\miniAPI\miniAPI\obj\Debug\net6.0\miniAPI.genruntimeconfig.cache
 C:\Users\catinca.ioana.ologu\Documents\GitHub\API_Project\miniAPI\miniAPI\obj\Debug\net6.0\ref\miniAPI.dll
+C:\Users\zsolt.tamas.incze\Desktop\API_PROJECT\API_Project\miniAPI\miniAPI\bin\Debug\net6.0\Newtonsoft.Json.dll
+C:\Users\zsolt.tamas.incze\Desktop\API_PROJECT\API_Project\miniAPI\miniAPI\bin\Debug\net6.0\System.Web.Cors.dll
+C:\Users\zsolt.tamas.incze\Desktop\API_PROJECT\API_Project\miniAPI\miniAPI\bin\Debug\net6.0\System.Net.Http.Formatting.dll
+C:\Users\zsolt.tamas.incze\Desktop\API_PROJECT\API_Project\miniAPI\miniAPI\bin\Debug\net6.0\System.Web.Http.dll
+C:\Users\zsolt.tamas.incze\Desktop\API_PROJECT\API_Project\miniAPI\miniAPI\bin\Debug\net6.0\System.Web.Http.Cors.dll
+C:\Users\zsolt.tamas.incze\Desktop\API_PROJECT\API_Project\miniAPI\miniAPI\bin\Debug\net6.0\Newtonsoft.Json.Bson.dll
