@@ -6,8 +6,9 @@ using System.Text.Json.Serialization;
 using Newtonsoft;
 using Newtonsoft.Json;
 using System.Globalization;
-//using Microsoft.AspNetCore.Cors;
-using System.Web.Http.Cors;
+using Microsoft.AspNetCore.Cors;
+using System.Diagnostics;
+using System.Text.Json;
 
 namespace miniAPI.Controllers
 {
@@ -18,14 +19,14 @@ namespace miniAPI.Controllers
     {
         public string value { get; set; }
 
-        public int decimals { get; set; }
+        public int digits { get; set; }
     }
 
     public class FloatClass
     {
-        public double value { get; set; }
+        public string value { get; set; }
 
-        public int desiredDecimals { get; set; }
+        public int decimals { get; set; }
     }
 
     public class FormatController : ControllerBase
@@ -60,30 +61,46 @@ namespace miniAPI.Controllers
             }
         }
 
-        [EnableCors(origins:"*", headers:"*", methods:"*")]
+        [EnableCors("Policy1")]
         [HttpPost("/FormatInteger")]
 
-        public String formatIntRequestHandler(string request)
+        public String formatIntRequestHandler([FromBody] JsonElement request)
         {
-            Console.WriteLine(request);
-            return "Done";
-
+            var json = request.GetRawText();
             try
             {
-                IntClass variableInt = JsonConvert.DeserializeObject<IntClass>(request);
-                return JsonConvert.SerializeObject(formatInt(variableInt));
+                IntClass variableInt = JsonConvert.DeserializeObject<IntClass>(json);
+                var res = formatInt(variableInt);
+                return JsonConvert.SerializeObject(res);
             }
             catch (Exception e)
             {
                 return e.Message;
             }
+        }
 
+        [EnableCors("Policy1")]
+        [HttpPost("/FormatFloat")]
+
+        public String formatFloatRequestHandler([FromBody] JsonElement request)
+        {
+            var json = request.GetRawText();
+            try
+            {
+                FloatClass variableFloat = JsonConvert.DeserializeObject<FloatClass>(json);
+                var res = formatFloat(variableFloat);
+                return JsonConvert.SerializeObject(res);
+            }
+            catch (Exception e)
+            {
+                return e.Message;
+            }
         }
 
         public IntClass formatInt(IntClass input)
         {
-            double temp = float.Parse(input.value, CultureInfo.InvariantCulture.NumberFormat);
-            if ((int)temp == 0 || input.decimals == 0)
+            double temp = double.Parse(input.value, CultureInfo.InvariantCulture.NumberFormat);
+            if ((int)temp == 0 || input.digits == 0)
             {
                 input.value = "0";
                 return input;
@@ -91,54 +108,39 @@ namespace miniAPI.Controllers
 
             int numberDigits = countDigits((int)temp);
 
-            if (numberDigits <= input.decimals)
+
+            if (numberDigits <= input.digits)
             {
-                input.value=((int)temp).ToString();
+                input.value = ((int)temp).ToString();
                 return input;
             }
 
-            input.value = new String('#', input.decimals);
+            input.value = new String('#', input.digits);
             return input;
         }
 
-        [HttpPost("/FormatFloat")]
-
-        public String formatFloat(FloatClass variableFloat)
+        public FloatClass formatFloat(FloatClass variableFloat)
         {
-            if (variableFloat.desiredDecimals == 0)
+            double temp = double.Parse(variableFloat.value, CultureInfo.InvariantCulture.NumberFormat);
+            if (variableFloat.decimals == 0)
             {
-                return ((int)variableFloat.value).ToString();
+                variableFloat.value = ((int)temp).ToString();
+                return variableFloat;
             }
 
             var precision = 0;
-            while (variableFloat.value * (double)Math.Pow(10, precision) != Math.Round(variableFloat.value * (double)Math.Pow(10, precision))) precision++;
-            if (variableFloat.desiredDecimals <= precision)
+            while (temp * (double)Math.Pow(10, precision) != Math.Round(temp * (double)Math.Pow(10, precision))) precision++;
+            if (variableFloat.decimals <= precision)
             {
-                int pow = (int)Math.Pow(10, variableFloat.desiredDecimals);
-                return (Math.Floor(variableFloat.value * pow) / pow).ToString();
+                int pow = (int)Math.Pow(10, variableFloat.decimals);
+                variableFloat.value = (Math.Floor(temp * pow) / pow).ToString();
+                return variableFloat;
+
             }
-            return variableFloat.value.ToString("0." + new string('0', variableFloat.desiredDecimals));
+            variableFloat.value = temp.ToString("0." + new string('0', variableFloat.decimals));
+            return variableFloat;
 
         }
-
-        //Json -> Object
-        //DESERIALIZATION
-        /*public ValueParameterInt(string response)
-        {
-            var result = JsonConverter.DeserializeObject<ValueParameterInt>(response);
-            return result;
-        }
-
-        //result.decimals = 2;
-
-
-        //Object -> Json
-        //SERIALIZATION
-        public boolean(ValueParameterInt value)
-        {
-            HttpClient.response(value.toJson());
-        }*/
-
 
     }
 }
