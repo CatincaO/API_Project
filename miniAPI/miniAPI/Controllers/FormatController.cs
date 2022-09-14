@@ -9,6 +9,7 @@ using System.Globalization;
 using Microsoft.AspNetCore.Cors;
 using System.Diagnostics;
 using System.Text.Json;
+using Newtonsoft.Json.Linq;
 
 namespace miniAPI.Controllers
 {
@@ -27,6 +28,18 @@ namespace miniAPI.Controllers
         public string value { get; set; }
 
         public int decimals { get; set; }
+    }
+
+    public class MyNumber
+    {
+        public int value1 { get; set; }
+        public int value2 { get; set; }
+    }
+
+    public class MyBoolean
+    {
+        public bool value1 { get; set; }
+        public bool value2 { get; set; }
     }
 
     public class FormatController : ControllerBase
@@ -140,6 +153,118 @@ namespace miniAPI.Controllers
             variableFloat.value = temp.ToString("0." + new string('0', variableFloat.decimals));
             return variableFloat;
 
+        }
+
+        [EnableCors("Policy1")]
+        [HttpPost("/addIntegers")]
+        public int additionRequestHandler([FromBody] JsonElement request)
+        {
+            var json = request.GetRawText();
+            try
+            {
+                Stopwatch stopwatch = new Stopwatch();
+                stopwatch.Start();
+                MyNumber temp = JsonConvert.DeserializeObject<MyNumber>(json);//AVG time for this = 190 miliseconds
+                stopwatch.Stop();
+                Debug.WriteLine("Elapsed time is {0}", stopwatch.ElapsedMilliseconds);
+                return temp.value1 + temp.value2;
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e.Message);
+                return 0;
+            }
+        }
+
+
+        [EnableCors("Policy1")]
+        [HttpPost("/substractIntegers")]
+        public int substractionRequestHandler([FromBody] JsonElement request)
+        {
+            var json = request.GetRawText();
+            try
+            {
+                MyNumber temp = JsonConvert.DeserializeObject<MyNumber>(json);
+                return temp.value1 - temp.value2;
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e.Message);
+                return 0;
+            }
+        }
+
+        [EnableCors("Policy1")]
+        [HttpPost("/multiplyIntegers")]
+        public int multiplicationRequestHandler([FromBody] JsonElement request)
+        {
+            var json = request.GetRawText();
+            try
+            {
+                MyNumber temp = JsonConvert.DeserializeObject<MyNumber>(json);
+                return temp.value1 * temp.value2;
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e.Message);
+                return 0;
+            }
+        }
+
+        [EnableCors("Policy1")]
+        [HttpPost("/divideIntegers")]
+        public float divisionRequestHandler([FromBody] JsonElement request)
+        {
+            var json = request.GetRawText();
+            try
+            {
+                MyNumber temp = JsonConvert.DeserializeObject<MyNumber>(json);
+                return temp.value1 / temp.value2;
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e.Message);
+                return 0;
+            }
+        }
+
+        [EnableCors("Policy1")]
+        [HttpPost("/relationalTest")]
+        public bool relationalOperationsRequestHandler([FromBody] JsonElement request)
+        {
+            var json = request.GetRawText();
+            try
+            {
+                MyNumber temp = JsonConvert.DeserializeObject<MyNumber>(json);
+                if (temp.value1 == temp.value2 || temp.value1 != temp.value2 || temp.value1 >= temp.value2 && temp.value1 > temp.value2)
+                    return true;
+                return false;
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e.Message);
+                return false;
+            }
+        }
+
+
+        [EnableCors("Policy1")]
+        [HttpPost("/logicalTest")]
+        public bool logicalOperationsRequestHandler([FromBody] JsonElement request)
+        {
+            var json = request.GetRawText();
+            try
+            {
+                MyBoolean temp = JsonConvert.DeserializeObject<MyBoolean>(json);
+                if (!(temp.value1 && temp.value2) || temp.value1 || temp.value2)
+                    return true;
+                return false;
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e.Message);
+                return false;
+            }
         }
 
     }
